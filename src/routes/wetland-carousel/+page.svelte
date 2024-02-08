@@ -11,12 +11,12 @@
 			alt: 'Before de-weeding, Yelahanka Puttenahalli.'
 		},
 		{
-			image: '/image-3.jpeg',
-			alt: 'After de-weeding, Yelahanka Puttenahalli.'
-		},
-		{
 			image: '/image-2.jpeg',
 			alt: 'Installation of floating islands.'
+		},
+		{
+			image: '/image-3.jpeg',
+			alt: 'After de-weeding, Yelahanka Puttenahalli.'
 		},
 		{
 			image: '/image-4.jpeg',
@@ -28,7 +28,7 @@
 	let emblaApi: EmblaCarouselType;
 
 	let options: EmblaOptionsType = {
-		loop: false,
+		loop: true,
 		align: 'center',
 		containScroll: false,
 		skipSnaps: true
