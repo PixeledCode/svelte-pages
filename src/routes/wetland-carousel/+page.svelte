@@ -23,8 +23,6 @@
 			alt: 'Floating island and a waterbird, Madiwala.'
 		}
 	];
-	let canNext = true;
-	let canPrev = false;
 	let emblaApi: EmblaCarouselType;
 
 	let options: EmblaOptionsType = {
@@ -35,27 +33,19 @@
 	};
 	const onInit = (event: { detail: any }) => {
 		emblaApi = event.detail;
-		emblaApi.on('select', select);
-	};
-
-	const select = () => {
-		canNext = emblaApi.canScrollNext();
-		canPrev = emblaApi.canScrollPrev();
 	};
 
 	function updateSlides(dir: string) {
-		if (canNext || canPrev) {
-			if (dir === 'next') {
-				emblaApi.scrollNext();
-			} else {
-				emblaApi.scrollPrev();
-			}
+		if (dir === 'next') {
+			emblaApi.scrollNext();
+		} else {
+			emblaApi.scrollPrev();
 		}
 	}
 </script>
 
 <div
-	class="relative h-[340px] mt-10"
+	class="relative h-[380px] w-full max-w-[1440px] mx-auto overflow-hidden mt-10"
 	use:emblaCarouselSvelte={{ options, plugins: [WheelGesturesPlugin({})] }}
 	on:emblaInit={onInit}
 	role="group"
@@ -80,10 +70,6 @@
 			</figure>
 		{/each}
 	</div>
-	{#if canPrev}
-		<Button side="left" {updateSlides} />
-	{/if}
-	{#if canNext}
-		<Button side="right" {updateSlides} />
-	{/if}
+	<Button side="left" {updateSlides} />
+	<Button side="right" {updateSlides} />
 </div>
