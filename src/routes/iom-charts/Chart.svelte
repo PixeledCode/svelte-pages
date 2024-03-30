@@ -2,8 +2,9 @@
 	import { LinkedChart } from 'svelte-tiny-linked-charts';
 	import { dataFetch } from './utils/fetcher';
 	import { onMount } from 'svelte';
-	import { getCharts } from './utils/context';
+	import { getCharts, getWorker } from './utils/context';
 	const charts = getCharts();
+	const { worker } = getWorker();
 
 	export let name: string;
 	let data: {
@@ -13,8 +14,10 @@
 	let resolved: boolean = false;
 
 	onMount(async () => {
-		if ($charts[name]) {
-			data = $charts[name];
+		worker && worker.postMessage({ data: `Hello from chart ${name}` });
+		const cached = $charts[name];
+		if (cached) {
+			data = cached;
 			resolved = true;
 			return;
 		}

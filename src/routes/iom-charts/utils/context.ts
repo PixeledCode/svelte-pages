@@ -11,8 +11,15 @@ type Context = Writable<Charts>;
 export function setChartContext() {
 	const charts = writable<Charts>({});
 	setContext('charts', charts);
+	setContext('worker', { worker: undefined });
 }
 
 export function getCharts() {
 	return getContext<Context>('charts');
+}
+
+export function getWorker() {
+	return getContext<{
+		worker: Worker | undefined;
+	}>('worker');
 }
