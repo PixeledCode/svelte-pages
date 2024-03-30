@@ -8,21 +8,26 @@
 		[key: string]: number;
 	} | void;
 	let error: boolean = false;
+	let resolved: boolean = false;
 
 	onMount(async () => {
 		data = await dataFetch(name)
-			.then((res) => res)
 			.catch(() => {
 				error = true;
+			})
+			.finally(() => {
+				resolved = true;
 			});
 	});
 </script>
 
 <div class="w-[300px] h-[300px] flex items-center justify-center border rounded-md">
-	{#if error && !data}
+	{#if !resolved}
+		<p>Loading...</p>
+	{:else if error}
 		<p>Error fetching data</p>
 	{:else if data}
-		<LinkedChart {data} type="bar" width={240} height={240} />
+		<LinkedChart {data} width={240} height={240} />
 	{/if}
 </div>
 
