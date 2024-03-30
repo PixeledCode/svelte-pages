@@ -4,7 +4,6 @@
 	import { onMount } from 'svelte';
 	import { getCharts, getWorker } from './utils/context';
 	const charts = getCharts();
-	const { worker } = getWorker();
 
 	export let name: string;
 	let data: {
@@ -14,12 +13,13 @@
 	let resolved: boolean = false;
 
 	onMount(async () => {
-		worker && worker.postMessage({ data: `Hello from chart ${name}` });
 		const cached = $charts[name];
 		if (cached) {
-			data = cached;
-			resolved = true;
-			return;
+			queueMicrotask(() => {
+				data = cached;
+				resolved = true;
+				return;
+			});
 		}
 
 		data = await dataFetch(name)
