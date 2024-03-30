@@ -1,5 +1,10 @@
 <script lang="ts">
 	import Chart from './Chart.svelte';
+	import { getCharts, setChartContext } from './utils/context';
+	setChartContext();
+
+	const charts = getCharts();
+	let loadChart: boolean = false;
 </script>
 
 <main class="flex flex-col min-h-screen justify-center items-center">
@@ -11,5 +16,17 @@
 		<!-- next chart will fail to fetch data -->
 		<Chart name="5" />
 		<Chart name="4" />
+		{#if !loadChart}
+			<div class="w-[300px] h-[300px] flex items-center justify-center border rounded-md">
+				<button
+					class="w-full h-full hover:bg-gray-100"
+					on:click={() => {
+						loadChart = true;
+					}}>click to load chart 4 from context</button
+				>
+			</div>
+		{:else}
+			<Chart name="4" />
+		{/if}
 	</div>
 </main>

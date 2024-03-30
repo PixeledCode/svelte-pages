@@ -2,6 +2,8 @@
 	import { LinkedChart } from 'svelte-tiny-linked-charts';
 	import { dataFetch } from './utils/fetcher';
 	import { onMount } from 'svelte';
+	import { getCharts } from './utils/context';
+	const charts = getCharts();
 
 	export let name: string;
 	let data: {
@@ -11,7 +13,22 @@
 	let resolved: boolean = false;
 
 	onMount(async () => {
+		if ($charts[name]) {
+			data = $charts[name];
+			resolved = true;
+			return;
+		}
+
 		data = await dataFetch(name)
+			.then((res) => {
+				charts.update((obj) => {
+					return {
+						...obj,
+						[name]: res
+					};
+				});
+				return res;
+			})
 			.catch(() => {
 				error = true;
 			})
@@ -30,6 +47,3 @@
 		<LinkedChart {data} width={240} height={240} />
 	{/if}
 </div>
-
-<style lang="scss">
-</style>
