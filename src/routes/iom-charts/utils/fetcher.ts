@@ -3,7 +3,9 @@ export async function dataFetch(name: string) {
 		fetch(`charts/${name}.json`)
 			.then((res) => res.json())
 			.then((data) => {
-				resolve(data);
+				setTimeout(() => {
+					resolve(data);
+				}, Math.random() * 1000);
 			})
 			.catch((err) => {
 				reject(err);
