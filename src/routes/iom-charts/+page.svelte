@@ -1,9 +1,8 @@
 <script lang="ts">
 	import Chart from './Chart.svelte';
-	import { getCharts, setChartContext } from './utils/context';
+	import { setChartContext } from './utils/context';
 	setChartContext();
 
-	const charts = getCharts();
 	let loadChart: boolean = false;
 </script>
 
