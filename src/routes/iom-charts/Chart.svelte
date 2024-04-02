@@ -28,10 +28,15 @@
 			res.arrayBuffer()
 		);
 
+		let d2 = await fetch('charts/assistance_received_during_journey.json').then((res) =>
+			res.json()
+		);
+
 		// const massiveFile = new Uint8Array(d);
 		console.log(fflate);
 		window.fflate = fflate;
 		window.d = d;
+		window.d2 = d2;
 
 		data = await dataFetch(`${name}.json.gz`)
 			.then((res) => {
