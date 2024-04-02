@@ -3,7 +3,7 @@
 	import { dataFetch } from './utils/fetcher';
 	import { onMount } from 'svelte';
 	import { getCharts, getWorker } from './utils/context';
-	import { decompressSync, strFromU8 } from 'fflate';
+	import * as fflate from 'fflate';
 	const charts = getCharts();
 
 	export let name: string;
@@ -28,8 +28,10 @@
 			res.arrayBuffer()
 		);
 
-		const massiveFile = new Uint8Array(d);
-		console.log(JSON.parse(strFromU8(massiveFile)));
+		// const massiveFile = new Uint8Array(d);
+		console.log(fflate);
+		window.fflate = fflate;
+		window.d = d;
 
 		data = await dataFetch(`${name}.json.gz`)
 			.then((res) => {
