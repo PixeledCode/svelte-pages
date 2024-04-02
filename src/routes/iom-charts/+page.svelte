@@ -5,6 +5,8 @@
 	import column_types from './data/column_types.json';
 	import { dataFetch } from './utils/fetcher';
 
+	import * as fflate from 'fflate';
+
 	setChartContext();
 	const workerContext = getWorker();
 	let worker: Worker;
@@ -14,6 +16,8 @@
 	let filteredData: {
 		[key: string]: number | string;
 	} = {};
+
+	window.fflate = fflate;
 
 	let data: any;
 
