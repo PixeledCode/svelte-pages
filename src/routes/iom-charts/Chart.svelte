@@ -23,7 +23,7 @@
 			});
 		}
 
-		data = await dataFetch(`${name}.json.gz`)
+		data = await dataFetch(`${name}.json`)
 			.then((res) => {
 				const obj: {
 					[key: string]: number;

@@ -24,7 +24,7 @@
 		// });
 		// workerContext.worker = worker;
 
-		data = await dataFetch(`intentions_filter_columns.json.gz`);
+		data = await dataFetch(`intentions_filter_columns.json`);
 		data.c.forEach((el: string) => (filteredData[el] = NaN));
 	});
 
