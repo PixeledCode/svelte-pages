@@ -17,21 +17,6 @@
 		// 	console.log(data);
 		// });
 		// workerContext.worker = worker;
-
-		const id = 'assistance_received_during_journey';
-		dataFetch(`${id}.json.gz`).then((res) => {
-			const obj: {
-				[key: string]: number;
-			} = {};
-			res.forEach((element) => {
-				const key = column_types[id].choices[element];
-				if (obj[key]) {
-					obj[key]++;
-				} else {
-					obj[key] = 1;
-				}
-			});
-		});
 	});
 
 	const list = [
