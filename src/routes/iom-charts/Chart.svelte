@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { LinkedChart } from 'svelte-tiny-linked-charts';
+	import { LinkedChart, LinkedLabel } from 'svelte-tiny-linked-charts';
 	import { dataFetch } from './utils/fetcher';
 	import { onMount } from 'svelte';
 	import { getCharts, getWorker } from './utils/context';
@@ -38,11 +38,17 @@
 					}
 				});
 
-				charts.update((prev) => {
-					return {
-						...prev,
-						[name]: obj
-					};
+				Object.keys(obj).forEach((key) => {
+					obj[key] = Number(((obj[key] / res.length) * 100).toFixed(2));
+				});
+
+				queueMicrotask(() => {
+					charts.update((prev) => {
+						return {
+							...prev,
+							[name]: obj
+						};
+					});
 				});
 
 				return obj;
@@ -62,7 +68,17 @@
 	{:else if error}
 		<p>Error fetching data</p>
 	{:else if data}
-		<p class="text-center my-2 px-2">{name.replaceAll('_', ' ')}</p>
-		<LinkedChart grow barMinWidth={0} {data} width={240} height={240} showValue />
+		<!-- <p class="text-center my-2 px-2">{name.replaceAll('_', ' ')}</p> -->
+		<LinkedLabel linked={name} />
+		<LinkedChart
+			grow
+			barMinWidth={0}
+			linked={name}
+			valueAppend="%"
+			{data}
+			width={240}
+			height={240}
+			showValue
+		/>
 	{/if}
 </div>
