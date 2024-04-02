@@ -1,22 +1,31 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import Chart from './Chart.svelte';
-	import { getWorker, setChartContext } from './utils/context';
-	import { dataFetch } from './utils/fetcher';
+	import { getCharts, getWorker, setChartContext } from './utils/context';
 	import column_types from './data/column_types.json';
+	import { dataFetch } from './utils/fetcher';
 
 	setChartContext();
 	const workerContext = getWorker();
 	let worker: Worker;
 
+	const charts = getCharts();
 	let loadChart: boolean = false;
+	let filteredData: {
+		[key: string]: number | string;
+	} = {};
 
-	onMount(() => {
+	let data: any;
+
+	onMount(async () => {
 		// worker = new Worker(new URL('./utils/worker.ts', import.meta.url));
 		// worker.addEventListener('message', ({ data }) => {
 		// 	console.log(data);
 		// });
 		// workerContext.worker = worker;
+
+		data = await dataFetch(`intentions_filter_columns.json.gz`);
+		data.c.forEach((el: string) => (filteredData[el] = NaN));
 	});
 
 	const list = [
@@ -26,10 +35,63 @@
 		'personal_local_bank_account_in_admin0_y_n'
 	];
 	const columns: any = column_types;
+
+	function handleFilter(e: any, type: string) {
+		let filtered = [...data.v];
+
+		if (e.target.value === 'all') {
+			filteredData[type] = NaN;
+		} else {
+			filteredData[type] = Number(e.target.value);
+		}
+
+		Object.keys(filteredData).forEach((key) => {
+			if (!Number.isNaN(filteredData[key])) {
+				const idx = data.c.findIndex((el: string) => el === key);
+				const value = filteredData[key];
+				filtered = filtered.filter((el: number[]) => {
+					return el[idx] === value;
+				});
+			}
+		});
+
+		console.log(filtered);
+	}
 </script>
 
 <main class="flex flex-col min-h-screen justify-center items-center">
 	<h1 class="text-2xl">IOM Charts</h1>
+
+	<div class="flex gap-4 flex-wrap mt-4">
+		<label class="flex flex-col">
+			Gender
+			<select
+				name="gender"
+				class="border rounded-sm p-1"
+				on:change={(e) => handleFilter(e, 'gender')}
+			>
+				<option value="all">All</option>
+				<option value={0}>Female</option>
+				<option value={1}>Male</option>
+			</select>
+		</label>
+
+		<label class="flex flex-col">
+			Age Group
+			<select
+				name="age_group"
+				class="border rounded-sm p-1"
+				on:change={(e) => handleFilter(e, 'age_group')}
+			>
+				<option value="all">All</option>
+				<option value={0}>18-29</option>
+				<option value={1}>30-39</option>
+				<option value={2}>40-49</option>
+				<option value={3}>50-59</option>
+				<option value={4}>60+</option>
+			</select>
+		</label>
+	</div>
 
 	<div class="grid grid-cols-2 grid-rows-2 justify-center gap-2 mt-4">
 		{#each list as item}

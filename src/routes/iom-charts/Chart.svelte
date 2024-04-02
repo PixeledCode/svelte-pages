@@ -29,17 +29,19 @@
 					[key: string]: number;
 				} = {};
 
-				res.forEach((element) => {
-					const key = choices[element];
-					if (obj[key]) {
-						obj[key]++;
-					} else {
-						obj[key] = 1;
+				res.v.forEach((element) => {
+					if (typeof element === 'number') {
+						const key = choices[element];
+						if (obj[key]) {
+							obj[key]++;
+						} else {
+							obj[key] = 1;
+						}
 					}
 				});
 
 				Object.keys(obj).forEach((key) => {
-					obj[key] = Number(((obj[key] / res.length) * 100).toFixed(2));
+					obj[key] = Number(((obj[key] / res.v.length) * 100).toFixed(2));
 				});
 
 				queueMicrotask(() => {
@@ -68,7 +70,7 @@
 	{:else if error}
 		<p>Error fetching data</p>
 	{:else if data}
-		<!-- <p class="text-center my-2 px-2">{name.replaceAll('_', ' ')}</p> -->
+		<p class="text-center my-2 px-2">{name.replaceAll('_', ' ')}</p>
 		<LinkedLabel linked={name} />
 		<LinkedChart
 			grow
