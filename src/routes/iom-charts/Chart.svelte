@@ -3,7 +3,6 @@
 	import { dataFetch } from './utils/fetcher';
 	import { onMount } from 'svelte';
 	import { getCharts, getWorker } from './utils/context';
-	import * as fflate from 'fflate';
 	const charts = getCharts();
 
 	export let name: string;
@@ -23,8 +22,6 @@
 				return;
 			});
 		}
-
-		window.fflate = fflate;
 
 		data = await dataFetch(`${name}.json.gz`)
 			.then((res) => {

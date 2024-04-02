@@ -2,7 +2,13 @@ export async function dataFetch(name: string) {
 	return new Promise<{
 		[key: string]: number[] | string[];
 	}>((resolve, reject) => {
-		fetch(`charts/${name}`)
+		fetch(`charts/${name}`, {
+			method: 'GET',
+
+			headers: {
+				'Content-Encoding': 'gzip'
+			}
+		})
 			.then((res) => res.json())
 			.then((data) => {
 				resolve(data);
