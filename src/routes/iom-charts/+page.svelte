@@ -2,6 +2,9 @@
 	import { onMount } from 'svelte';
 	import Chart from './Chart.svelte';
 	import { getWorker, setChartContext } from './utils/context';
+	import { dataFetch } from './utils/fetcher';
+	import column_types from './data/column_types.json';
+
 	setChartContext();
 	const workerContext = getWorker();
 	let worker: Worker;
@@ -9,27 +12,50 @@
 	let loadChart: boolean = false;
 
 	onMount(() => {
-		worker = new Worker(new URL('./utils/worker.ts', import.meta.url));
-		worker.addEventListener('message', ({ data }) => {
-			console.log(data);
-		});
+		// worker = new Worker(new URL('./utils/worker.ts', import.meta.url));
+		// worker.addEventListener('message', ({ data }) => {
+		// 	console.log(data);
+		// });
+		// workerContext.worker = worker;
 
-		workerContext.worker = worker;
+		const id = 'assistance_received_during_journey';
+		dataFetch(`${id}.json.gz`).then((res) => {
+			const obj: {
+				[key: string]: number;
+			} = {};
+			res.forEach((element) => {
+				const key = column_types[id].choices[element];
+				if (obj[key]) {
+					obj[key]++;
+				} else {
+					obj[key] = 1;
+				}
+			});
+		});
 	});
+
+	const list = [
+		'assistance_received_during_journey',
+		'experience_difficulty_receiving_support_during_journey',
+		'experience_discrimination_y_n',
+		'personal_local_bank_account_in_admin0_y_n'
+	];
+	const columns: any = column_types;
 </script>
 
 <main class="flex flex-col min-h-screen justify-center items-center">
 	<h1 class="text-2xl">IOM Charts</h1>
 
 	<div class="grid grid-cols-2 grid-rows-2 justify-center gap-2 mt-4">
-		<Chart name="1" />
-		<Chart name="2" />
+		{#each list as item}
+			<Chart name={item} choices={columns[item].choices} />
+		{/each}
+
 		<!-- next chart will fail to fetch data -->
-		<Chart name="5" />
-		<Chart name="4" />
+		<!-- <Chart name="5" /> -->
 
 		<!-- checking if context is working -->
-		{#if !loadChart}
+		<!-- {#if !loadChart}
 			<div class="w-[300px] h-[300px] flex items-center justify-center border rounded-md">
 				<button
 					class="w-full h-full hover:bg-gray-100"
@@ -40,6 +66,6 @@
 			</div>
 		{:else}
 			<Chart name="4" />
-		{/if}
+		{/if} -->
 	</div>
 </main>

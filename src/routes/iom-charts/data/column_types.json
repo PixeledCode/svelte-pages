@@ -1,0 +1,522 @@
+{
+	"gender": {
+		"type": "select_one",
+		"choices": ["female", "male"],
+		"num_selections_range": [1, 1]
+	},
+	"marital_status": {
+		"type": "select_one",
+		"choices": [
+			"divorced",
+			"married",
+			"married_partnership",
+			"partnership",
+			"pnta",
+			"separated_divorced_widowed",
+			"single",
+			"widowed"
+		],
+		"num_selections_range": [1, 1]
+	},
+	"has_children_y_n": {
+		"type": "select_one",
+		"choices": ["nan", "no", "yes"],
+		"num_selections_range": [1, 1]
+	},
+	"highest_level_of_education_completed": {
+		"type": "select_one",
+		"choices": [
+			"none",
+			"other_nonformal",
+			"post_graduate",
+			"post_secondary",
+			"primary",
+			"religious_school",
+			"secondary_educ",
+			"secondary_lower",
+			"secondary_upper",
+			"tertiary"
+		],
+		"num_selections_range": [1, 1]
+	},
+	"main_language_used_at_home": {
+		"type": "select_one",
+		"choices": [
+			"nan",
+			"arabic",
+			"azeri",
+			"bulgarian",
+			"hindi",
+			"hungarian",
+			"italian",
+			"romani",
+			"romanian",
+			"russian",
+			"surzhik",
+			"ukrainian"
+		],
+		"num_selections_range": [1, 1]
+	},
+	"traveling_with_person_with_serious_health_specific_needs": {
+		"type": "select_one",
+		"choices": ["nan", "dk", "no", "pnta", "yes"],
+		"num_selections_range": [1, 1]
+	},
+	"where_are_you_currently_living_in_current_location": {
+		"type": "select_one",
+		"choices": [
+			"apartment_free",
+			"apartment_free_friends",
+			"apartment_owned",
+			"apartment_rented",
+			"apartment_rented_friend",
+			"collective",
+			"dk",
+			"hotel_free",
+			"hotel_hostel",
+			"hotel_payed",
+			"housing_work",
+			"no_accommodation",
+			"other",
+			"pnta",
+			"transit"
+		],
+		"num_selections_range": [1, 1]
+	},
+	"movement_intentions": {
+		"type": "select_one",
+		"choices": [
+			"nan",
+			"another_country",
+			"dk",
+			"no_intentions_to_move",
+			"plan_to_return_to_ukraine",
+			"pnta",
+			"ukr_another_location",
+			"ukr_place_of_origin",
+			"within_current_country"
+		],
+		"num_selections_range": [1, 1]
+	},
+	"destination_choice_reason": {
+		"type": "select_multiple",
+		"choices": [
+			"nan",
+			"accommodation_there",
+			"as_a_transit_country_before_moving_to_another_country",
+			"authorities",
+			"better_protection",
+			"close_to_home",
+			"close_to_ukraine",
+			"culturally_close_to_ukrainian_culture",
+			"easier_to_find_work",
+			"employment",
+			"expired_assistance",
+			"family_relatives_in_the_area",
+			"friends",
+			"friends_in_the_area",
+			"have_lived_studied_worked_previously_here",
+			"job",
+			"job_offer",
+			"job_opportunity",
+			"lived_there",
+			"no_reason",
+			"no_specific_reason",
+			"other",
+			"other_people_there",
+			"pnta",
+			"protection_system",
+			"proximity_to_ukraine",
+			"relatives",
+			"relatives_or_friends",
+			"school_for_children",
+			"speak_the_language",
+			"study",
+			"work"
+		],
+		"num_selections_range": [1, 5]
+	},
+	"desire_to_return_home_y_n": {
+		"type": "select_one",
+		"choices": ["nan", "dk", "no", "no_icant", "pnta", "yes", "yes_if"],
+		"num_selections_range": [1, 1]
+	},
+	"avg_income_sufficent_for_monthly_expenses": {
+		"type": "select_one",
+		"choices": ["nan", "dk", "no", "pnta", "yes"],
+		"num_selections_range": [1, 1]
+	},
+	"how_do_you_pay_for_your_daily_expenses": {
+		"type": "select_multiple",
+		"choices": [
+			"nan",
+			"borrowed_money",
+			"income",
+			"other",
+			"pnta",
+			"savings",
+			"support_from_authorities",
+			"support_from_family",
+			"support_from_ngo"
+		],
+		"num_selections_range": [1, 3]
+	},
+	"current_occupation_brings_money": {
+		"type": "select_one",
+		"choices": [
+			"nan",
+			"armed_forces",
+			"clerical_support_worker",
+			"craft__related_trades",
+			"elementary_occupation",
+			"manager",
+			"other",
+			"plant_machine_operator",
+			"professional",
+			"services_and_sales worker",
+			"skilled_agricultural_w",
+			"technician_associate_professional"
+		],
+		"num_selections_range": [1, 1]
+	},
+	"if_employed_profession_occupation_before_departing": {
+		"type": "select_one",
+		"choices": [
+			"nan",
+			"armed_forces",
+			"clerical_support_worker",
+			"craft__related_trades",
+			"elementary_occupation",
+			"manager",
+			"maternity_paternity_leave",
+			"other",
+			"plant_machine_operator",
+			"professional",
+			"retired",
+			"services_and_sales worker",
+			"skilled_agricultural_w",
+			"technician_associate_professional"
+		],
+		"num_selections_range": [1, 1]
+	},
+	"current_migration_status": {
+		"type": "select_one",
+		"choices": [
+			"nan",
+			"citizenship",
+			"eu_tp",
+			"irregular_stay",
+			"other",
+			"permanent",
+			"pnta",
+			"refugee",
+			"short_term",
+			"student",
+			"work"
+		],
+		"num_selections_range": [1, 1]
+	},
+	"applying_asylum_refugee_status": {
+		"type": "select_one",
+		"choices": ["nan", "app_tp", "no", "pnta", "yes"],
+		"num_selections_range": [1, 1]
+	},
+	"personal_local_bank_account_in_admin0_y_n": {
+		"type": "select_one",
+		"choices": ["nan", "no", "pnta", "yes"],
+		"num_selections_range": [1, 1]
+	},
+	"able_to_enrol_with_education_facilities": {
+		"type": "select_one",
+		"choices": [
+			"nan",
+			"no_child",
+			"no_dropped",
+			"not_enrolled",
+			"yes",
+			"yes_local",
+			"yes_local_online_mix",
+			"yes_online_ukr"
+		],
+		"num_selections_range": [1, 1]
+	},
+	"knowing_to_contact_consular_representative": {
+		"type": "select_one",
+		"choices": ["nan", "no", "pnta", "yes"],
+		"num_selections_range": [1, 1]
+	},
+	"obstacles_accessing_healthcare": {
+		"type": "select_multiple",
+		"choices": [
+			"nan",
+			"cost",
+			"difficult",
+			"discrimination",
+			"dk",
+			"donot_know",
+			"easy",
+			"lack_documents",
+			"lack_of_information_on_where_to_go_and_how_to_access_health_services",
+			"lack_of_money_for_transport_to_health_care_services",
+			"lack_transport_to_services",
+			"language_barrier",
+			"long_queues",
+			"medicines_not_available",
+			"na",
+			"none",
+			"not_provided_in_my_preferred_language",
+			"nothing_is_preventing",
+			"other",
+			"pnta",
+			"services_not_available"
+		],
+		"num_selections_range": [1, 5]
+	},
+	"current_priority_needs_while_in_destination_country": {
+		"type": "select_multiple",
+		"choices": [
+			"nan",
+			"access_to_medicines_health_services",
+			"accommodation",
+			"accommodation_long",
+			"accommodation_short",
+			"business_support",
+			"cash",
+			"clothes_shoes",
+			"communication_elsewhere",
+			"contact_family",
+			"documentation_and_registration",
+			"documentation_assistance",
+			"edu_adult",
+			"education",
+			"education_for_children",
+			"education_training_for_adults",
+			"employment",
+			"employment_job",
+			"family_reunification",
+			"family_tracing",
+			"financial_support",
+			"food",
+			"food_supply",
+			"general_information",
+			"health_services",
+			"household_goods",
+			"hygiene_items",
+			"info_about_services",
+			"information_support_and__communication",
+			"job_work",
+			"language_courses",
+			"language_training",
+			"legal_advice",
+			"legal_assistance",
+			"legal_counselling_and_services",
+			"long_term_shelter_accommodation",
+			"material_assist",
+			"med_treatment",
+			"medicines",
+			"none",
+			"other",
+			"personal_hygiene",
+			"personal_safety",
+			"psychological_counseling",
+			"psychological_counselling",
+			"psychosocial_support",
+			"school_enrollment",
+			"specialised_health_services_for_people_with_disabilities",
+			"support_return",
+			"support_to_return_home",
+			"transport",
+			"transportation_support"
+		],
+		"num_selections_range": [1, 17]
+	},
+	"assistance_received_during_journey": {
+		"type": "select_one",
+		"choices": ["nan", "no", "pnta", "yes"],
+		"num_selections_range": [1, 1]
+	},
+	"assistance_type_received_during_journey": {
+		"type": "select_multiple",
+		"choices": [
+			"nan",
+			"accommodation",
+			"cash",
+			"clothes",
+			"clothing_and_footwear",
+			"employment",
+			"financial_support",
+			"food",
+			"food_products_meals",
+			"free_transportation",
+			"health_care_services",
+			"language_courses",
+			"medicines",
+			"other",
+			"personal_hygiene",
+			"personal_hygiene_and_sanitary_supplies",
+			"pnta",
+			"psycho_couns",
+			"psychological_counselling",
+			"toys",
+			"transport",
+			"voucher"
+		],
+		"num_selections_range": [1, 10]
+	},
+	"experience_difficulty_receiving_support_during_journey": {
+		"type": "select_one",
+		"choices": ["nan", "dk", "no", "pnta", "yes"],
+		"num_selections_range": [1, 1]
+	},
+	"challenge_inclusion": {
+		"type": "select_multiple",
+		"choices": [
+			"nan",
+			"access_school",
+			"discrimination",
+			"dk",
+			"documentation_issue",
+			"documentation_ssue",
+			"financial_issue",
+			"housing",
+			"hunger",
+			"lack_info",
+			"lack_info_empl",
+			"lack_job",
+			"language",
+			"none",
+			"other",
+			"overcrowded",
+			"pnta",
+			"racism",
+			"recognition_disab",
+			"roq",
+			"services",
+			"stress",
+			"womengirls_space"
+		],
+		"num_selections_range": [1, 3]
+	},
+	"problems_obstacles_encountered_during_journey": {
+		"type": "select_multiple",
+		"choices": [
+			"nan",
+			"detention_nongov",
+			"documents",
+			"extortion",
+			"hardship_journey",
+			"homesick",
+			"imprisonment",
+			"injury",
+			"intimidation_abuse",
+			"lack_info",
+			"lack_shelter",
+			"none",
+			"other",
+			"physical_sickness",
+			"physical_violence",
+			"pnta",
+			"racism_xenophobia",
+			"robbery",
+			"shooting_bombing"
+		],
+		"num_selections_range": [1, 9]
+	},
+	"dataset_id": {
+		"type": "select_one",
+		"choices": [
+			"Belarus",
+			"Bulgaria",
+			"Czechia",
+			"Estonia",
+			"Hungary",
+			"Latvia",
+			"Lithuania",
+			"Poland",
+			"Republic of Moldova",
+			"Romania",
+			"Slovakia"
+		],
+		"num_selections_range": [1, 1]
+	},
+	"quarter": {
+		"type": "select_one",
+		"choices": ["Q1", "Q2", "Q3", "Q4"],
+		"num_selections_range": [1, 1]
+	},
+	"month": {
+		"type": "select_one",
+		"choices": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+		"num_selections_range": [1, 1]
+	},
+	"age_group": {
+		"type": "select_one",
+		"choices": ["18-29", "30-39", "40-49", "50-59", "60+"],
+		"num_selections_range": [1, 1]
+	},
+	"date_of_initial_displacement_upd": {
+		"type": "date",
+		"range": ["01/06/1996", "20/12/2023"]
+	},
+	"departed_from_admin_1_label": {
+		"type": "select_one",
+		"choices": [
+			"Autonomous Republic of Crimea",
+			"Cherkaska",
+			"Chernihivska",
+			"Chernivetska",
+			"Dnipropetrovska",
+			"Donetska",
+			"Ivano-Frankivska",
+			"Kharkivska",
+			"Khersonska",
+			"Khmelnytska",
+			"Kirovohradska",
+			"Kyiv",
+			"Kyivska",
+			"Luhanska",
+			"Lvivska",
+			"Mykolaivska",
+			"Odeska",
+			"Poltavska",
+			"Rivnenska",
+			"Sevastopol",
+			"Sumska",
+			"Ternopilska",
+			"Vinnytska",
+			"Volynska",
+			"Zakarpatska",
+			"Zaporizka",
+			"Zhytomyrska"
+		],
+		"num_selections_range": [1, 1]
+	},
+	"nationality_declared_label": {
+		"type": "select_one",
+		"choices": [
+			"Azerbaijan",
+			"Bulgaria",
+			"China",
+			"Hungary",
+			"India",
+			"Iran (Islamic Republic of)",
+			"Russian Federation",
+			"Syrian Arab Republic",
+			"Turkmenistan",
+			"Ukraine",
+			"Uzbekistan"
+		],
+		"num_selections_range": [1, 1]
+	},
+	"experience_discrimination_y_n": {
+		"type": "select_one",
+		"choices": ["nan", "dk", "no", "pnta", "yes"],
+		"num_selections_range": [1, 1]
+	},
+	"emplstatus_now": {
+		"type": "select_one",
+		"choices": ["employed", "inactive", "unemployed", "unknown"],
+		"num_selections_range": [1, 1]
+	},
+	"_uuid": { "type": "uuid" }
+}

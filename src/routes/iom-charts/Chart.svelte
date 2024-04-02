@@ -6,6 +6,7 @@
 	const charts = getCharts();
 
 	export let name: string;
+	export let choices: string;
 	let data: {
 		[key: string]: number;
 	} | void;
@@ -22,15 +23,29 @@
 			});
 		}
 
-		data = await dataFetch(name)
+		data = await dataFetch(`${name}.json.gz`)
 			.then((res) => {
-				charts.update((obj) => {
+				const obj: {
+					[key: string]: number;
+				} = {};
+
+				res.forEach((element) => {
+					const key = choices[element];
+					if (obj[key]) {
+						obj[key]++;
+					} else {
+						obj[key] = 1;
+					}
+				});
+
+				charts.update((prev) => {
 					return {
-						...obj,
-						[name]: res
+						...prev,
+						[name]: obj
 					};
 				});
-				return res;
+
+				return obj;
 			})
 			.catch(() => {
 				error = true;
@@ -41,12 +56,13 @@
 	});
 </script>
 
-<div class="w-[300px] h-[300px] flex items-center justify-center border rounded-md">
+<div class="w-[300px] h-[300px] flex flex-col items-center justify-center border rounded-md">
 	{#if !resolved}
 		<p>Loading...</p>
 	{:else if error}
 		<p>Error fetching data</p>
 	{:else if data}
-		<LinkedChart {data} width={240} height={240} />
+		<p class="text-center my-2 px-2">{name.replaceAll('_', ' ')}</p>
+		<LinkedChart grow barMinWidth={0} {data} width={240} height={240} showValue />
 	{/if}
 </div>
