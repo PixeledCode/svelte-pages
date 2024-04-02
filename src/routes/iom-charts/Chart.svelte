@@ -3,6 +3,7 @@
 	import { dataFetch } from './utils/fetcher';
 	import { onMount } from 'svelte';
 	import { getCharts, getWorker } from './utils/context';
+	import { decompressSync, strFromU8 } from 'fflate';
 	const charts = getCharts();
 
 	export let name: string;
@@ -22,6 +23,13 @@
 				return;
 			});
 		}
+
+		let d = await fetch('charts/assistance_received_during_journey.gz').then((res) =>
+			res.arrayBuffer()
+		);
+
+		const massiveFile = new Uint8Array(d);
+		console.log(JSON.parse(strFromU8(massiveFile)));
 
 		data = await dataFetch(`${name}.json.gz`)
 			.then((res) => {
