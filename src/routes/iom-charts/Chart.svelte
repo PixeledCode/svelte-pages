@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { LinkedChart, LinkedLabel } from 'svelte-tiny-linked-charts';
-	import { dataFetch } from './utils/fetcher';
+	import { dataFetch, filterChart } from './utils/fetcher';
 	import { onMount } from 'svelte';
-	import { getCharts, getWorker } from './utils/context';
+	import { getCharts } from './utils/context';
 	const charts = getCharts();
 
 	export let name: string;
@@ -28,7 +28,7 @@
 	}
 
 	onMount(async () => {
-		worker = new Worker(new URL('./utils/worker.ts', import.meta.url));
+		worker = new Worker(new URL('./utils/worker.ts', import.meta.url), { type: 'module' });
 		worker.addEventListener('message', ({ data }) => {
 			queueMicrotask(() => {
 				charts.update((prev: any) => {
@@ -81,6 +81,24 @@
 
 	function generateData(currentData: ChartData) {
 		if (!!window.Worker) worker.postMessage({ currentData, choices });
+		else {
+			const obj = filterChart(currentData, choices);
+
+			queueMicrotask(() => {
+				charts.update((prev: any) => {
+					return {
+						...prev,
+						[name]: {
+							...$charts[name],
+							currentRawData: currentData,
+							data: obj
+						}
+					};
+				});
+			});
+
+			chartData = obj;
+		}
 	}
 </script>
 

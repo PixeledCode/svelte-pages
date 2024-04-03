@@ -3,7 +3,7 @@
 	import Chart from './Chart.svelte';
 	import { setChartContext } from './utils/context';
 	import column_types from './data/column_types.json';
-	import { dataFetch } from './utils/fetcher';
+	import { dataFetch, globalFilter } from './utils/fetcher';
 
 	setChartContext();
 	let worker: Worker;
@@ -15,7 +15,7 @@
 	let data: any;
 
 	onMount(async () => {
-		worker = new Worker(new URL('./utils/worker.ts', import.meta.url));
+		worker = new Worker(new URL('./utils/worker.ts', import.meta.url), { type: 'module' });
 		worker.addEventListener('message', ({ data: { filterList } }) => {
 			filteredData = filterList;
 		});
@@ -35,6 +35,10 @@
 	function handleFilter(e: any, type: string) {
 		if (!!window.Worker)
 			worker.postMessage({ filterList, value: e.target.value, type, rawData: data });
+		else {
+			const filteredList = globalFilter(filterList, e.target.value, type, data);
+			filteredData = filteredList;
+		}
 	}
 </script>
 
