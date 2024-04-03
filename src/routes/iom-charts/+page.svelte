@@ -14,7 +14,7 @@
 	let filterList: {
 		[key: string]: number | string;
 	} = {};
-	let filteredData: number[][];
+	let filteredData: number[];
 
 	let data: any;
 
@@ -27,7 +27,6 @@
 
 		data = await dataFetch(`intentions_filter_columns.json`);
 		data.c.forEach((el: string) => (filterList[el] = NaN));
-		filteredData = data.v;
 	});
 
 	const list = [
@@ -39,21 +38,34 @@
 	const columns: any = column_types;
 
 	function handleFilter(e: any, type: string) {
-		let filtered = [...data.v];
-
 		if (e.target.value === 'all') {
 			filterList[type] = NaN;
 		} else {
 			filterList[type] = Number(e.target.value);
 		}
 
+		const filterKeys: {
+			[key: number]: number | string;
+		} = {};
 		Object.keys(filterList).forEach((key) => {
 			if (!Number.isNaN(filterList[key])) {
 				const idx = data.c.findIndex((el: string) => el === key);
-				const value = filterList[key];
-				filtered = filtered.filter((el: number[]) => {
-					return el[idx] === value;
-				});
+				filterKeys[idx] = filterList[key];
+			}
+		});
+
+		let filtered: number[] = [];
+
+		data.v.forEach((el: number[], index: number) => {
+			let valid = true;
+			Object.keys(filterKeys).forEach((key: any) => {
+				if (el[key] !== filterKeys[key]) {
+					valid = false;
+					return;
+				}
+			});
+			if (valid) {
+				filtered.push(index);
 			}
 		});
 
@@ -95,11 +107,13 @@
 		</label>
 	</div>
 
-	<p class="mt-4">Filtered Data: {filteredData ? filteredData.length : 'loading...'}</p>
+	<p class="mt-4">
+		Filtered Data: {filteredData ? filteredData.length : data ? data.v.length : 'loading...'}
+	</p>
 
 	<div class="grid grid-cols-2 grid-rows-2 justify-center gap-2 mt-4">
 		{#each list as item}
-			<Chart name={item} choices={columns[item].choices} />
+			<Chart name={item} bind:filteredData choices={columns[item].choices} />
 		{/each}
 
 		<!-- next chart will fail to fetch data -->

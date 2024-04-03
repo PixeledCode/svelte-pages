@@ -3,7 +3,10 @@ import { getContext, setContext } from 'svelte';
 
 type Charts = {
 	[key: string]: {
-		[key: string]: number;
+		raw: { v: { [key: string]: number } };
+		data: {
+			[key: string]: number;
+		};
 	};
 };
 type Context = Writable<Charts>;

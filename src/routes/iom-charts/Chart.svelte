@@ -7,17 +7,28 @@
 
 	export let name: string;
 	export let choices: string;
+	export let filteredData: number[];
+
 	let data: {
 		[key: string]: number;
 	} | void;
 	let error: boolean = false;
 	let resolved: boolean = false;
 
+	$: filteredData && run();
+
+	function run() {
+		if ($charts[name]) {
+			const filtered = filteredData.map((el) => $charts[name].raw.v[el]);
+			data = generateData({ v: filtered });
+		}
+	}
+
 	onMount(async () => {
 		const cached = $charts[name];
 		if (cached) {
 			queueMicrotask(() => {
-				data = cached;
+				data = cached.data;
 				resolved = true;
 				return;
 			});
@@ -25,35 +36,18 @@
 
 		data = await dataFetch(`${name}.json`)
 			.then((res) => {
-				const obj: {
-					[key: string]: number;
-				} = {};
-
-				res.v.forEach((element) => {
-					if (typeof element === 'number') {
-						const key = choices[element];
-						if (obj[key]) {
-							obj[key]++;
-						} else {
-							obj[key] = 1;
-						}
-					}
-				});
-
-				Object.keys(obj).forEach((key) => {
-					obj[key] = Number(((obj[key] / res.v.length) * 100).toFixed(2));
-				});
-
 				queueMicrotask(() => {
-					charts.update((prev) => {
+					charts.update((prev: any) => {
 						return {
 							...prev,
-							[name]: obj
+							[name]: {
+								...$charts[name],
+								raw: res
+							}
 						};
 					});
 				});
-
-				return obj;
+				return generateData(res as { v: number[] });
 			})
 			.catch(() => {
 				error = true;
@@ -62,6 +56,42 @@
 				resolved = true;
 			});
 	});
+
+	function generateData(currentData: { v: number[] }) {
+		const obj: {
+			[key: string]: number;
+		} = {};
+
+		currentData.v.forEach((element) => {
+			if (typeof element === 'number') {
+				const key = choices[element];
+				if (obj[key]) {
+					obj[key]++;
+				} else {
+					obj[key] = 1;
+				}
+			}
+		});
+
+		Object.keys(obj).forEach((key) => {
+			obj[key] = Number(((obj[key] / currentData.v.length) * 100).toFixed(2));
+		});
+
+		queueMicrotask(() => {
+			charts.update((prev: any) => {
+				return {
+					...prev,
+					[name]: {
+						...$charts[name],
+						currentRawData: currentData,
+						data: obj
+					}
+				};
+			});
+		});
+
+		return obj;
+	}
 </script>
 
 <div class="w-[300px] h-[300px] flex flex-col items-center justify-center border rounded-md">
