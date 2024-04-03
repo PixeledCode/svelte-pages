@@ -18,12 +18,14 @@
 	let error: boolean = false;
 	let resolved: boolean = false;
 
+	// run this function everytime filteredData changes
 	$: filteredData && updateChart();
 
 	function updateChart() {
 		if ($charts[name]) {
+			// mapping filteredData from parent to raw data fetched
 			const filtered = filteredData.map((el) => $charts[name].raw.v[el]);
-			chartData = generateData({ v: filtered });
+			chartData = generateFilteredChart({ v: filtered });
 		}
 	}
 
@@ -36,6 +38,7 @@
 						...prev,
 						[name]: {
 							...$charts[name],
+							// might come handy later. This is filtered but not converted to percentage
 							currentRawData: data.currentData,
 							data: data.obj
 						}
@@ -48,6 +51,7 @@
 
 		const cached = $charts[name];
 		if (cached) {
+			//  this will be used later during report generation
 			queueMicrotask(() => {
 				chartData = cached.data;
 				resolved = true;
@@ -69,7 +73,7 @@
 						};
 					});
 				});
-				return generateData(res as ChartData);
+				return generateFilteredChart(res as ChartData);
 			})
 			.catch(() => {
 				error = true;
@@ -79,7 +83,7 @@
 			});
 	});
 
-	function generateData(currentData: ChartData) {
+	function generateFilteredChart(currentData: ChartData) {
 		if (!!window.Worker) worker.postMessage({ currentData, choices });
 		else {
 			const obj = filterChart(currentData, choices);

@@ -4,14 +4,14 @@
 	import { setChartContext } from './utils/context';
 	import column_types from './data/column_types.json';
 	import { dataFetch, globalFilter } from './utils/fetcher';
+	setChartContext(); // initiate context for charts on page level
+	const columns: any = column_types; // this is to handle typescript error
 
-	setChartContext();
 	let worker: Worker;
 	let filterList: {
 		[key: string]: number | string;
 	} = {};
 	let filteredData: number[];
-
 	let data: any;
 
 	onMount(async () => {
@@ -20,7 +20,9 @@
 			filteredData = filterList;
 		});
 
+		// fetch filter json
 		data = await dataFetch(`intentions_filter_columns.json`);
+		// initiate filterList with NaN values
 		data.c.forEach((el: string) => (filterList[el] = NaN));
 	});
 
@@ -30,7 +32,6 @@
 		'experience_discrimination_y_n',
 		'personal_local_bank_account_in_admin0_y_n'
 	];
-	const columns: any = column_types;
 
 	function handleFilter(e: any, type: string) {
 		if (!!window.Worker)
