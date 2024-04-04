@@ -1,15 +1,17 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import Chart from './Chart.svelte';
-	import { setChartContext } from './utils/context';
+	import { getFilters, setChartContext } from './utils/context';
 	import column_types from './data/column_types.json';
 	import { dataFetch, globalFilter } from './utils/fetcher';
 	setChartContext(); // initiate context for charts on page level
 	const columns: any = column_types; // this is to handle typescript error
 
+	const filters = getFilters();
+
 	let worker: Worker;
 	let filterList: {
-		[key: string]: number | string;
+		[key: string]: number;
 	} = {};
 	let filteredData: number[];
 	let data: any;
@@ -23,7 +25,16 @@
 		// fetch filter json
 		data = await dataFetch(`intentions_filter_columns.json`);
 		// initiate filterList with NaN values
-		data.c.forEach((el: string) => (filterList[el] = NaN));
+		data.c.forEach((el: number) => (filterList[el] = NaN));
+		filters.set(filterList);
+
+		filters.subscribe((value) => {
+			if (!!window.Worker) worker.postMessage({ filterList: value, rawData: data });
+			else {
+				const filteredList = globalFilter(value, data);
+				filteredData = filteredList;
+			}
+		});
 	});
 
 	const listOfCharts = [
@@ -34,12 +45,18 @@
 	];
 
 	function handleFilter(e: any, type: string) {
-		if (!!window.Worker)
-			worker.postMessage({ filterList, value: e.target.value, type, rawData: data });
-		else {
-			const filteredList = globalFilter(filterList, e.target.value, type, data);
-			filteredData = filteredList;
+		const value = e.target.value;
+		const idx = value === 'all' ? 'all' : columns[type].choices.indexOf(value);
+
+		filterList = { ...$filters };
+		// generate [{filter_name: selected filter}] object
+		if (idx === 'all') {
+			filterList[type] = NaN;
+		} else {
+			filterList[type] = idx;
 		}
+
+		filters.update(() => filterList);
 	}
 </script>
 
@@ -55,8 +72,8 @@
 				on:change={(e) => handleFilter(e, 'gender')}
 			>
 				<option value="all">All</option>
-				<option value={0}>Female</option>
-				<option value={1}>Male</option>
+				<option value="female">Female</option>
+				<option value="male">Male</option>
 			</select>
 		</label>
 
@@ -68,11 +85,11 @@
 				on:change={(e) => handleFilter(e, 'age_group')}
 			>
 				<option value="all">All</option>
-				<option value={0}>18-29</option>
-				<option value={1}>30-39</option>
-				<option value={2}>40-49</option>
-				<option value={3}>50-59</option>
-				<option value={4}>60+</option>
+				<option value="18-29">18-29</option>
+				<option value="30-39">30-39</option>
+				<option value="40-49">40-49</option>
+				<option value="50-59">50-59</option>
+				<option value="60+">60+</option>
 			</select>
 		</label>
 	</div>

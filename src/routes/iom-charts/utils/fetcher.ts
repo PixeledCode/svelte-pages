@@ -19,17 +19,8 @@ export async function dataFetch(name: string) {
 
 export function globalFilter(
 	filterList: { [key: string]: number | string },
-	value: string,
-	type: string,
 	data: { c: string[]; v: number[][] }
 ) {
-	// generate [{filter_name: selected filter}] object
-	if (value === 'all') {
-		filterList[type] = NaN;
-	} else {
-		filterList[type] = Number(value);
-	}
-
 	const filterKeys: {
 		[key: number]: number | string;
 	} = {};
