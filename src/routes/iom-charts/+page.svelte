@@ -6,13 +6,13 @@
 	import { getFilters, setChartContext } from './utils/context';
 	import { dataFetch, globalFilter } from './utils/fetcher';
 	import { setParams } from './utils/params';
+	import { listOfCharts, filterOptions } from './data/constants';
 
 	setChartContext(); // initiate context for charts on page level
 	const columns: any = column_types; // this is to handle typescript error
+	let worker: Worker;
 
 	const filters = getFilters();
-
-	let worker: Worker;
 	let filterList: {
 		[key: string]: number;
 	} = {};
@@ -27,12 +27,14 @@
 
 		// fetch filter json
 		data = await dataFetch(`intentions_filter_columns.json`);
-		// initiate filterList with NaN values
 
 		// does not work without setTimeout
-		// this will sync the url params with the $page store
+
 		setTimeout(() => {
+			// this will sync the url params with the $page store
 			const initialFilters = setParams({});
+
+			// set the initial filter list with index number or NaN
 			data.c.forEach((type: string) => {
 				let val = initialFilters[type];
 				if (val) {
@@ -56,29 +58,14 @@
 		});
 	});
 
-	const listOfCharts = [
-		'assistance_received_during_journey',
-		'experience_difficulty_receiving_support_during_journey',
-		'experience_discrimination_y_n',
-		'personal_local_bank_account_in_admin0_y_n'
-	];
-
 	function handleFilter(e: any, type: string) {
-		const value = e.target.value;
-		const idx = value === 'all' ? 'all' : columns[type].choices.indexOf(value);
+		const { value } = e.target;
+		const idx = value === 'all' ? NaN : columns[type].choices.indexOf(value);
 
+		// update the filter list
+		filters.set({ ...$filters, [type]: idx });
 		// set query params of the selected filter
 		setParams({ [type]: value });
-
-		filterList = { ...$filters };
-		// generate [{filter_name: selected filter}] object
-		if (idx === 'all') {
-			filterList[type] = NaN;
-		} else {
-			filterList[type] = idx;
-		}
-
-		filters.update(() => filterList);
 	}
 </script>
 
@@ -86,36 +73,21 @@
 	<h1 class="text-2xl">IOM Charts</h1>
 
 	<div class="flex gap-4 flex-wrap mt-4">
-		<label class="flex flex-col">
-			Gender
-			<select
-				name="gender"
-				class="border rounded-sm p-1"
-				on:change={(e) => handleFilter(e, 'gender')}
-				value={$page.state.gender || 'all'}
-			>
-				<option value="all">All</option>
-				<option value="female">Female</option>
-				<option value="male">Male</option>
-			</select>
-		</label>
-
-		<label class="flex flex-col">
-			Age Group
-			<select
-				name="age_group"
-				class="border rounded-sm p-1"
-				on:change={(e) => handleFilter(e, 'age_group')}
-				value={$page.state.age_group || 'all'}
-			>
-				<option value="all">All</option>
-				<option value="18-29">18-29</option>
-				<option value="30-39">30-39</option>
-				<option value="40-49">40-49</option>
-				<option value="50-59">50-59</option>
-				<option value="60+">60+</option>
-			</select>
-		</label>
+		{#each filterOptions as filter}
+			<label class="flex flex-col">
+				Gender
+				<select
+					name={filter.name}
+					class="border rounded-sm p-1"
+					on:change={(e) => handleFilter(e, filter.name)}
+					value={$page.state[filter.name] || filter.options[0].value}
+				>
+					{#each filter.options as option}
+						<option value={option.value}>{option.label}</option>
+					{/each}
+				</select>
+			</label>
+		{/each}
 	</div>
 
 	<p class="mt-4">
