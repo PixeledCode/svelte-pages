@@ -117,7 +117,7 @@
 	}
 </script>
 
-<div class="w-[300px] h-[300px] flex flex-col items-center justify-center border rounded-md">
+<div class="w-[300px] h-[300px] p-3 flex flex-col items-center justify-center border wrapper">
 	{#if !resolved}
 		<p>Loading...</p>
 	{:else if error}
@@ -148,5 +148,10 @@
 	.chart-container {
 		width: 100%;
 		height: 300px;
+	}
+
+	.wrapper {
+		box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.25);
+		border-radius: 20px;
 	}
 </style>

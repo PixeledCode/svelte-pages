@@ -94,7 +94,7 @@
 		Filtered Data: {filteredData?.length || data?.v?.length || 'loading...'}
 	</p>
 
-	<div class="grid grid-cols-2 grid-rows-2 justify-center gap-2 mt-4">
+	<div class="grid grid-cols-2 grid-rows-2 justify-center gap-4 mt-4">
 		{#each listOfCharts as item}
 			<Chart name={item} bind:filteredData choices={columns[item].choices} />
 		{/each}

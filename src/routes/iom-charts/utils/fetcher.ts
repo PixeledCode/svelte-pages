@@ -76,7 +76,5 @@ export function filterChart(currentData: { v: number[] }, choices: string[]) {
 		};
 	});
 
-	console.log(finalArr);
-
 	return finalArr;
 }

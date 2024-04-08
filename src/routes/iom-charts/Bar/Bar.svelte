@@ -7,8 +7,8 @@
 
 	const { data, xGet, yGet, xScale, yScale } = getContext('LayerCake');
 
-	/** @type {String} [fill='#00bbff'] - The shape's fill color. This is technically optional because it comes with a default value but you'll likely want to replace it with your own color. */
-	export let fill = '#00bbff';
+	/** @type {String} [fill='#00bbff'] - The shape's fill color. */
+	export let fill = '#0D369A';
 </script>
 
 <g class="bar-group">
@@ -17,10 +17,28 @@
 			class="group-rect"
 			data-id={i}
 			x={$xScale.range()[0]}
-			y={$yGet(d)}
-			height={$yScale.bandwidth()}
+			y={$yGet(d) + 12}
+			height={24}
 			width={$xGet(d)}
+			rx={4}
 			{fill}
 		></rect>
+		<text
+			x={$xScale.range()[0] + $xGet(d) / 1.15}
+			y={$yGet(d) + 26}
+			dominant-baseline="middle"
+			text-anchor="middle"
+			fill="white"
+			class="text"
+		>
+			{$data[i].value}%
+		</text>
 	{/each}
 </g>
+
+<style>
+	.text {
+		font-size: 12px;
+		font-weight: 500;
+	}
+</style>
