@@ -16,6 +16,7 @@
 		"@sveltejs/adapter-static": "^3.0.1",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
+		"@types/d3-scale": "^4.0.8",
 		"@types/eslint": "8.56.0",
 		"@typescript-eslint/eslint-plugin": "^6.0.0",
 		"@typescript-eslint/parser": "^6.0.0",
@@ -37,9 +38,11 @@
 	"type": "module",
 	"dependencies": {
 		"clsx": "^2.1.0",
+		"d3-scale": "^4.0.2",
 		"embla-carousel": "^8.0.0-rc22",
 		"embla-carousel-svelte": "^8.0.0-rc22",
 		"embla-carousel-wheel-gestures": "^8.0.0-rc05",
+		"layercake": "^8.1.1",
 		"lucide-svelte": "^0.323.0",
 		"svelte-tiny-linked-charts": "^1.6.0"
 	}

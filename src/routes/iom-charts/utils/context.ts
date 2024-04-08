@@ -5,8 +5,9 @@ type Charts = {
 	[key: string]: {
 		raw: { v: { [key: string]: number } };
 		data: {
-			[key: string]: number;
-		};
+			type: number | string;
+			value: number;
+		}[];
 	};
 };
 type Context = Writable<Charts>;

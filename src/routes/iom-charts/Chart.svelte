@@ -1,8 +1,16 @@
 <script lang="ts">
-	import { LinkedChart, LinkedLabel } from 'svelte-tiny-linked-charts';
+	import { scaleBand } from 'd3-scale';
 	import { dataFetch, filterChart } from './utils/fetcher';
 	import { onMount } from 'svelte';
 	import { getCharts } from './utils/context';
+	import { LayerCake, Svg } from 'layercake';
+	import Bar from './Bar/Bar.svelte';
+	import AxisX from './Bar/AxisX.svelte';
+	import AxisY from './Bar/AxisY.svelte';
+
+	const xKey = 'value';
+	const yKey = 'type';
+
 	const charts = getCharts();
 
 	export let name: string;
@@ -12,9 +20,12 @@
 
 	type ChartData = { v: number[] };
 
-	let chartData: {
-		[key: string]: number;
-	} | void;
+	let chartData:
+		| {
+				type: number | string;
+				value: number;
+		  }[]
+		| void;
 	let error: boolean = false;
 	let resolved: boolean = false;
 
@@ -113,16 +124,29 @@
 		<p>Error fetching data</p>
 	{:else if chartData}
 		<p class="text-center my-2 px-2">{name.replaceAll('_', ' ')}</p>
-		<LinkedLabel linked={name} />
-		<LinkedChart
-			grow
-			barMinWidth={0}
-			linked={name}
-			valueAppend="%"
-			data={chartData}
-			width={240}
-			height={240}
-			showValue
-		/>
+
+		<div class="chart-container">
+			<LayerCake
+				padding={{ bottom: 20, left: 35 }}
+				x={xKey}
+				y={yKey}
+				yScale={scaleBand().paddingInner(0.05)}
+				xDomain={[0, null]}
+				data={chartData}
+			>
+				<Svg>
+					<AxisX tickMarks baseline snapLabels />
+					<AxisY tickMarks gridlines={false} />
+					<Bar />
+				</Svg>
+			</LayerCake>
+		</div>
 	{/if}
 </div>
+
+<style>
+	.chart-container {
+		width: 100%;
+		height: 300px;
+	}
+</style>

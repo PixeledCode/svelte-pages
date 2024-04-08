@@ -66,5 +66,17 @@ export function filterChart(currentData: { v: number[] }, choices: string[]) {
 		obj[key] = Number(((obj[key] / currentData.v.length) * 100).toFixed(2));
 	});
 
-	return obj;
+	const finalArr: {
+		type: number | string;
+		value: number;
+	}[] = Object.keys(obj).map((key) => {
+		return {
+			type: key,
+			value: obj[key]
+		};
+	});
+
+	console.log(finalArr);
+
+	return finalArr;
 }
