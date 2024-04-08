@@ -45,6 +45,7 @@
 		"embla-carousel-wheel-gestures": "^8.0.0-rc05",
 		"layercake": "^8.1.1",
 		"lucide-svelte": "^0.323.0",
+		"modern-screenshot": "^4.4.38",
 		"pdfmake": "^0.2.10",
 		"svelte-tiny-linked-charts": "^1.6.0"
 	}

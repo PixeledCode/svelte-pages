@@ -117,7 +117,9 @@
 	}
 </script>
 
-<div class="w-[300px] h-[300px] p-3 flex flex-col items-center justify-center border wrapper">
+<div
+	class="w-[300px] h-[300px] p-3 flex flex-col items-center justify-center border wrapper chart-wrapper"
+>
 	{#if !resolved}
 		<p>Loading...</p>
 	{:else if error}
