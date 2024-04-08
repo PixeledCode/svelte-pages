@@ -18,6 +18,7 @@
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@types/d3-scale": "^4.0.8",
 		"@types/eslint": "8.56.0",
+		"@types/pdfmake": "^0.2.9",
 		"@typescript-eslint/eslint-plugin": "^6.0.0",
 		"@typescript-eslint/parser": "^6.0.0",
 		"autoprefixer": "^10.4.17",
@@ -44,6 +45,7 @@
 		"embla-carousel-wheel-gestures": "^8.0.0-rc05",
 		"layercake": "^8.1.1",
 		"lucide-svelte": "^0.323.0",
+		"pdfmake": "^0.2.10",
 		"svelte-tiny-linked-charts": "^1.6.0"
 	}
 }

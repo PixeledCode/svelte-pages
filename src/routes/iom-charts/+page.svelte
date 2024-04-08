@@ -7,6 +7,7 @@
 	import { dataFetch, globalFilter } from './utils/fetcher';
 	import { setParams } from './utils/params';
 	import { listOfCharts, filterOptions } from './data/constants';
+	import Pdf from './pdf.svelte';
 
 	setChartContext(); // initiate context for charts on page level
 	const columns: any = column_types; // this is to handle typescript error
@@ -99,4 +100,6 @@
 			<Chart name={item} bind:filteredData choices={columns[item].choices} />
 		{/each}
 	</div>
+
+	<Pdf />
 </main>
