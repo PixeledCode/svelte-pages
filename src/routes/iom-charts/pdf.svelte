@@ -1,8 +1,16 @@
 <script lang="ts">
 	import pdfMake from 'pdfmake/build/pdfmake';
-	import pdfFonts from 'pdfmake/build/vfs_fonts';
-	import { onMount } from 'svelte';
-	pdfMake.vfs = pdfFonts.pdfMake.vfs;
+	(<any>pdfMake).fonts = {
+		Roboto: {
+			normal:
+				'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf',
+			bold: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Medium.ttf',
+			italics:
+				'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Italic.ttf',
+			bolditalics:
+				'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-MediumItalic.ttf'
+		}
+	};
 	import { domToPng } from 'modern-screenshot';
 
 	let dd: any = {
@@ -42,8 +50,6 @@
 
 		if (elms)
 			Promise.all(promises).then((values) => {
-				console.log(values);
-
 				let content = [
 					{
 						text: 'IOM Charts\n',
@@ -83,8 +89,6 @@
 			});
 	}
 </script>
-
-<svelte:window on:load={() => console.log('DOM loaded')} />
 
 <button
 	class="mt-8 bg-violet-500 hover:bg-violet-600 text-white py-2 px-4 font-medium text-sm rounded"
