@@ -7,6 +7,7 @@ export const listOfCharts = [
 
 export const filterOptions = [
 	{
+		label: 'Gender',
 		name: 'gender',
 		options: [
 			{
@@ -24,6 +25,7 @@ export const filterOptions = [
 		]
 	},
 	{
+		label: 'Age Group',
 		name: 'age_group',
 		options: [
 			{

@@ -29,16 +29,9 @@
 			dominant-baseline="middle"
 			text-anchor="middle"
 			fill="white"
-			class="text"
+			style={'font-size: 12px; font-weight: medium'}
 		>
 			{$data[i].value}%
 		</text>
 	{/each}
 </g>
-
-<style>
-	.text {
-		font-size: 12px;
-		font-weight: 500;
-	}
-</style>

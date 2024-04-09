@@ -70,13 +70,13 @@
 	}
 </script>
 
-<main class="flex flex-col min-h-screen justify-center items-center">
+<main class="flex flex-col min-h-screen justify-center items-center pb-5">
 	<h1 class="text-2xl">IOM Charts</h1>
 
 	<div class="flex gap-4 flex-wrap mt-4">
 		{#each filterOptions as filter}
 			<label class="flex flex-col">
-				Gender
+				{filter.label}
 				<select
 					name={filter.name}
 					class="border rounded-sm p-1"
@@ -101,5 +101,5 @@
 		{/each}
 	</div>
 
-	<Pdf />
+	<Pdf total={filteredData?.length || data?.v?.length} />
 </main>
