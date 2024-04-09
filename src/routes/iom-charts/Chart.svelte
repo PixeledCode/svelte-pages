@@ -136,7 +136,7 @@
 				xDomain={[0, null]}
 				data={chartData}
 			>
-				<Svg>
+				<Svg viewBox="0 0 270 240">
 					<AxisX tickMarks baseline snapLabels ticks={3} />
 					<AxisY tickMarks gridlines={false} />
 					<Bar />

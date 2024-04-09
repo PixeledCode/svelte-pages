@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import pdfMake from 'pdfmake/build/pdfmake';
 	(<any>pdfMake).fonts = {
 		Roboto: {
@@ -11,7 +12,13 @@
 				'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-MediumItalic.ttf'
 		}
 	};
-	import { domToPng } from 'modern-screenshot';
+
+	const fonts = {
+		'Open Sans': {
+			normal: 'OpenSans-Regular.ttf',
+			medium: 'OpenSans-Medium.ttf'
+		}
+	};
 
 	let dd: any = {
 		styles: {
@@ -28,66 +35,63 @@
 				italics: true
 			},
 			small: {
-				fontSize: 8
+				fontSize: 10
 			}
 		},
 		defaultStyle: {
-			columnGap: 20
+			columnGap: 20,
+			fontSize: 12,
+			font: 'Roboto'
 		}
 	};
 
 	function handleOpen() {
-		let elms = document.querySelectorAll('.chart-wrapper');
-		let promises: Promise<any>[] = [];
+		let elms = document.querySelectorAll('.chart-wrapper svg');
 
-		elms.forEach((elm) => {
-			promises.push(
-				domToPng(elm, {
-					scale: 3
-				})
-			);
-		});
-
-		if (elms)
-			Promise.all(promises).then((values) => {
-				let content = [
+		let content = [
+			{
+				text: 'IOM Charts\n',
+				style: 'header'
+			},
+			{
+				text: 'Some subheading.\n\n',
+				style: 'subheader'
+			},
+			{
+				alignment: 'justify',
+				columns: [
 					{
-						text: 'IOM Charts\n',
-						style: 'header'
+						svg: elms[0].outerHTML,
+						fit: [240, 240]
 					},
-					'Some subheading\n\n',
 					{
-						alignment: 'justify',
-						columns: [
-							{
-								image: values[0],
-								width: 250
-							},
-							{
-								image: values[1],
-								width: 250
-							}
-						]
-					},
-					'\n\n',
-					{
-						alignment: 'justify',
-						columns: [
-							{
-								image: values[2],
-								width: 250
-							},
-							{
-								image: values[3],
-								width: 250
-							}
-						]
+						svg: elms[1].outerHTML,
+						fit: [240, 240]
 					}
-				];
-				dd.content = content;
-				pdfMake.createPdf(dd).open();
-			});
+				]
+			},
+			'\n\n',
+			{
+				alignment: 'justify',
+				columns: [
+					{
+						svg: elms[2].outerHTML,
+						fit: [240, 240]
+					},
+					{
+						svg: elms[3].outerHTML,
+						fit: [240, 240]
+					}
+				]
+			}
+		];
+		dd.content = content;
+		pdfMake.createPdf(dd).open();
 	}
+
+	onMount(() => {
+		// import './utils/vfs_fonts';
+	});
 </script>
 
 <button
