@@ -17,15 +17,15 @@
 			class="group-rect"
 			data-id={i}
 			x={$xScale.range()[0]}
-			y={$yGet(d) + 12}
-			height={24}
+			y={$yGet(d)}
+			height={$yScale.bandwidth()}
 			width={$xGet(d)}
-			rx={4}
+			rx={1}
 			{fill}
 		></rect>
 		<text
 			x={$xScale.range()[0] + $xGet(d) / 1.15}
-			y={$yGet(d) + 26}
+			y={$yGet(d) + $yScale.bandwidth() / 2}
 			dominant-baseline="middle"
 			text-anchor="middle"
 			fill="white"

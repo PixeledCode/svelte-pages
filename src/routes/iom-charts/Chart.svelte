@@ -132,12 +132,12 @@
 				padding={{ bottom: 20, left: 35 }}
 				x={xKey}
 				y={yKey}
-				yScale={scaleBand().paddingInner(0.05)}
+				yScale={scaleBand().paddingInner(0.2)}
 				xDomain={[0, null]}
 				data={chartData}
 			>
 				<Svg>
-					<AxisX tickMarks baseline snapLabels />
+					<AxisX tickMarks baseline snapLabels ticks={3} />
 					<AxisY tickMarks gridlines={false} />
 					<Bar />
 				</Svg>
