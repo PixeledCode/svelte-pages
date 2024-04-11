@@ -1,16 +1,14 @@
-<!--
-  @component
-  Generates an SVG bar chart.
- -->
 <script lang="ts">
 	import { getContext } from 'svelte';
 	import Rect from './Rect.svelte';
 
-	const { data, xGet, yGet, xScale, yScale }: any = getContext('LayerCake');
+	const { data }: any = getContext('LayerCake');
+
+	console.log('ran bar');
 </script>
 
 <g class="bar-group">
 	{#each $data as d, i}
-		<Rect data={d} index={i} {xGet} {yGet} {xScale} {yScale} />
+		<Rect data={d} index={i} />
 	{/each}
 </g>

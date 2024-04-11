@@ -3,7 +3,7 @@
 	import { dataFetch, filterChart } from './utils/fetcher';
 	import { onMount } from 'svelte';
 	import { getCharts } from './utils/context';
-	import { LayerCake, Svg, calcExtents } from 'layercake';
+	import { LayerCake, Svg } from 'layercake';
 	import Bar from './Bar/Bar.svelte';
 	import AxisX from './Bar/AxisX.svelte';
 	import AxisY from './Bar/AxisY.svelte';
@@ -36,7 +36,7 @@
 		if ($charts[name]) {
 			// mapping filteredData from parent to raw data fetched
 			const filtered = filteredData.map((el) => $charts[name].raw.v[el]);
-			chartData = generateFilteredChart({ v: filtered });
+			generateFilteredChart({ v: filtered });
 		}
 	}
 
@@ -115,11 +115,6 @@
 			chartData = obj;
 		}
 	}
-
-	const extentGetters = {
-		x: (d: { x: any }) => d.x,
-		y: (d: { y: any }) => d.y
-	};
 </script>
 
 <div
