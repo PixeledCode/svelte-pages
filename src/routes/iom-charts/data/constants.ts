@@ -37,10 +37,6 @@ export const filterOptions = [
 				value: '18-29'
 			},
 			{
-				label: '18-29',
-				value: '18-29'
-			},
-			{
 				label: '30-39',
 				value: '30-39'
 			},

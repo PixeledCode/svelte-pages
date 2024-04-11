@@ -3,7 +3,7 @@
 	import { dataFetch, filterChart } from './utils/fetcher';
 	import { onMount } from 'svelte';
 	import { getCharts } from './utils/context';
-	import { LayerCake, Svg } from 'layercake';
+	import { LayerCake, Svg, calcExtents } from 'layercake';
 	import Bar from './Bar/Bar.svelte';
 	import AxisX from './Bar/AxisX.svelte';
 	import AxisY from './Bar/AxisY.svelte';
@@ -25,7 +25,7 @@
 				type: number | string;
 				value: number;
 		  }[]
-		| void;
+		| void = [];
 	let error: boolean = false;
 	let resolved: boolean = false;
 
@@ -115,6 +115,11 @@
 			chartData = obj;
 		}
 	}
+
+	const extentGetters = {
+		x: (d: { x: any }) => d.x,
+		y: (d: { y: any }) => d.y
+	};
 </script>
 
 <div
@@ -124,7 +129,7 @@
 		<p>Loading...</p>
 	{:else if error}
 		<p>Error fetching data</p>
-	{:else if chartData}
+	{:else if chartData && chartData.length > 0}
 		<p class="text-center my-2 px-2">{name.replaceAll('_', ' ')}</p>
 
 		<div class="chart-container">
@@ -133,8 +138,8 @@
 				x={xKey}
 				y={yKey}
 				yScale={scaleBand().paddingInner(0.2)}
-				xDomain={[0, null]}
 				data={chartData}
+				xDomain={[0, null]}
 			>
 				<Svg viewBox="0 0 270 240">
 					<AxisX tickMarks baseline snapLabels ticks={3} />
