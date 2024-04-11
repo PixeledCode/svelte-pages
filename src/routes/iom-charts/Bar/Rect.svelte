@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { getContext } from 'svelte';
 	import { tweened } from 'svelte/motion';
 	import * as eases from 'svelte/easing';
 
@@ -18,10 +17,9 @@
 		easing: eases.cubicInOut
 	};
 
-	const widthFn = tweened(undefined, tweenOptions);
+	const width = tweened(undefined, tweenOptions);
 
-	$: widthFn.set($xGet(data));
-	const width: any = $widthFn;
+	$: width.set($xGet(data));
 </script>
 
 <rect
@@ -35,7 +33,7 @@
 	{fill}
 ></rect>
 <text
-	x={$xScale.range()[0] + $width / 1.15}
+	x={$xScale.range()[0] + ($width || 0) / 1.15}
 	y={$yGet(data) + $yScale.bandwidth() / 2}
 	dominant-baseline="middle"
 	text-anchor="middle"
