@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
 	import { scaleBand } from 'd3-scale';
 	import { dataFetch, filterChart } from './utils/fetcher';
 	import { onMount } from 'svelte';
@@ -13,21 +13,23 @@
 
 	const charts = getCharts();
 
-	export let name: string;
-	export let choices: string[];
-	export let filteredData: number[];
-	let worker: Worker;
+	/** @type {string} */
+	export let name;
+	/** @type {string[]} */
+	export let choices;
+	/** @type {number[]} */
+	export let filteredData;
+	/** @type {Worker} */
+	let worker;
 
-	type ChartData = { v: number[] };
-
-	let chartData:
-		| {
+	/** @type {{
 				type: number | string;
 				value: number;
 		  }[]
-		| void = [];
-	let error: boolean = false;
-	let resolved: boolean = false;
+		| void } */
+	let chartData = [];
+	let error = false;
+	let resolved = false;
 
 	// run this function everytime filteredData changes
 	$: filteredData && updateChart();
@@ -44,7 +46,7 @@
 		worker = new Worker(new URL('./utils/worker.ts', import.meta.url), { type: 'module' });
 		worker.addEventListener('message', ({ data }) => {
 			queueMicrotask(() => {
-				charts.update((prev: any) => {
+				charts.update((prev) => {
 					return {
 						...prev,
 						[name]: {
@@ -74,7 +76,8 @@
 			.then((res) => {
 				// add raw data to store
 				queueMicrotask(() => {
-					charts.update((prev: any) => {
+					// @ts-ignore
+					charts.update((prev) => {
 						return {
 							...prev,
 							[name]: {
@@ -84,7 +87,7 @@
 						};
 					});
 				});
-				return generateFilteredChart(res as ChartData);
+				return generateFilteredChart(res);
 			})
 			.catch(() => {
 				error = true;
@@ -94,13 +97,16 @@
 			});
 	});
 
-	function generateFilteredChart(currentData: ChartData) {
+	/**
+	 * @param {any} currentData
+	 */
+	function generateFilteredChart(currentData) {
 		if (!!window.Worker) worker.postMessage({ currentData, choices });
 		else {
 			const obj = filterChart(currentData, choices);
 
 			queueMicrotask(() => {
-				charts.update((prev: any) => {
+				charts.update((prev) => {
 					return {
 						...prev,
 						[name]: {

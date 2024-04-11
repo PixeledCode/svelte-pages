@@ -1,10 +1,8 @@
-<script lang="ts">
+<script>
 	import { getContext } from 'svelte';
 	import Rect from './Rect.svelte';
 
-	const { data }: any = getContext('LayerCake');
-
-	console.log('ran bar');
+	const { data } = getContext('LayerCake');
 </script>
 
 <g class="bar-group">

@@ -1,14 +1,16 @@
-<script lang="ts">
+<script>
 	import { tweened } from 'svelte/motion';
 	import * as eases from 'svelte/easing';
 	import { getContext } from 'svelte';
 
-	export let data: any;
-	export let index: number;
-	const { xGet, yGet, xScale, yScale }: any = getContext('LayerCake');
+	/** @type {{type: string; value: string}} */
+	export let data;
+	/** @type {number} */
+	export let index;
+	const { xGet, yGet, xScale, yScale } = getContext('LayerCake');
 
 	/** @type {String} [fill='#00bbff'] - The shape's fill color. */
-	export let fill: string = '#0D369A';
+	export let fill = '#0D369A';
 
 	const tweenOptions = {
 		duration: 300,
@@ -18,8 +20,6 @@
 	const width = tweened(undefined, tweenOptions);
 
 	$: width.set($xGet(data));
-
-	console.log('ran rect');
 </script>
 
 <rect
